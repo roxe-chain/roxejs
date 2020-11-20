@@ -312,8 +312,8 @@ function stringToPublicKey(s) {
     if (typeof s !== 'string') {
         throw new Error('expected string containing public key');
     }
-    if (s.substr(0, 3) === 'ROXE') {
-        var whole = base58ToBinary(exports.publicKeyDataSize + 4, s.substr(3));
+    if (s.substr(0, 4) === 'ROXE') {
+        var whole = base58ToBinary(exports.publicKeyDataSize + 4, s.substr(4));
         var key = { type: KeyType.k1, data: new Uint8Array(exports.publicKeyDataSize) };
         for (var i = 0; i < exports.publicKeyDataSize; ++i) {
             key.data[i] = whole[i];
@@ -353,7 +353,7 @@ exports.publicKeyToString = publicKeyToString;
  * Leaves other formats untouched
  */
 function convertLegacyPublicKey(s) {
-    if (s.substr(0, 3) === 'ROXE') {
+    if (s.substr(0, 4) === 'ROXE') {
         return publicKeyToString(stringToPublicKey(s));
     }
     return s;
